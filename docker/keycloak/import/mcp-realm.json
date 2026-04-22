@@ -1,0 +1,73 @@
+{
+  "realm": "mcp",
+  "enabled": true,
+  "displayName": "MCP Apps Workshop",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "accessTokenLifespan": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 28800,
+  "roles": {
+    "realm": [
+      { "name": "fridge-user", "description": "Can read and write the fridge inventory" }
+    ]
+  },
+  "users": [
+    {
+      "username": "demo",
+      "email": "demo@mcpappsbuilders.com",
+      "firstName": "Demo",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        { "type": "password", "value": "demo", "temporary": false }
+      ],
+      "realmRoles": ["fridge-user"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "fridge-manager",
+      "name": "Fridge Manager MCP App",
+      "description": "OAuth 2.1 client for the workshop fridge MCP server",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+"
+      },
+      "redirectUris": [
+        "http://localhost:8000/*",
+        "http://localhost:5173/*",
+        "http://localhost:8443/*",
+        "http://workshop:8000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8000",
+        "http://localhost:5173",
+        "http://localhost:8443",
+        "+"
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access"
+      ]
+    }
+  ]
+}

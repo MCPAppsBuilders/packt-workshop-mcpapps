@@ -1,0 +1,64 @@
+services:
+  # ------------------------------------------------------------------
+  # Keycloak: OAuth 2.1 authorization server for Module 6
+  # ------------------------------------------------------------------
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: mcp-keycloak
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak/import:/opt/keycloak/data/import:ro
+      - keycloak-data:/opt/keycloak/data
+    networks:
+      - workshop
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080 && echo -e 'GET /realms/master HTTP/1.0\\r\\n\\r\\n' >&3 && head -n1 <&3 | grep -q '200\\|301\\|302'"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  # ------------------------------------------------------------------
+  # Workshop IDE: Python 3.11, Node 24, ngrok, VSCode in the browser.
+  # Everything the participant needs to build the fridge MCP app.
+  # ------------------------------------------------------------------
+  workshop:
+    build:
+      context: ./workshop
+    container_name: mcp-workshop
+    environment:
+      # Password for the VSCode web UI
+      PASSWORD: ${WORKSHOP_PASSWORD:-mcpapps}
+      # Optional: ngrok token (sign up at ngrok.com). Empty = ngrok still
+      # installed, participant can run `ngrok config add-authtoken <token>`
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:-}
+      # Convenience env for reaching Keycloak from inside the container
+      KEYCLOAK_URL: http://keycloak:8080
+    ports:
+      - "8443:8443"   # VSCode web (code-server)
+      - "8000:8000"   # FastMCP Python server (HTTP transport)
+      - "5173:5173"   # Vite dev server for the React view
+      - "4040:4040"   # ngrok web inspector
+    volumes:
+      # Single exportable volume. Everything the participant writes lives here.
+      - ./data:/data
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    networks:
+      - workshop
+
+volumes:
+  keycloak-data:
+
+networks:
+  workshop:
+    driver: bridge
