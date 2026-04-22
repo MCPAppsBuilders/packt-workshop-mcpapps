@@ -34,7 +34,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
 # -----------------------------------------------------------------------------
 # ngrok client (official apt repo)
 # -----------------------------------------------------------------------------
-RUN curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+RUN mkdir -p /etc/apt/keyrings \
+    && curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
         | gpg --dearmor -o /etc/apt/keyrings/ngrok.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/ngrok.gpg] https://ngrok-agent.s3.amazonaws.com bookworm main" \
         > /etc/apt/sources.list.d/ngrok.list \
@@ -66,11 +67,13 @@ RUN mkdir -p /data && chmod 777 /data
 WORKDIR /data
 VOLUME /data
 
-# Pre-install a few handy VSCode extensions for the workshop
-RUN code-server --install-extension ms-python.python \
-    && code-server --install-extension esbenp.prettier-vscode \
-    && code-server --install-extension dbaeumer.vscode-eslint \
-    && code-server --install-extension redhat.vscode-yaml
+# Pre-install a few handy VSCode extensions for the workshop.
+# Non-fatal: a missing extension in the Open VSX registry should not break
+# the whole build.
+RUN code-server --install-extension ms-python.python || true \
+    && code-server --install-extension esbenp.prettier-vscode || true \
+    && code-server --install-extension dbaeumer.vscode-eslint || true \
+    && code-server --install-extension redhat.vscode-yaml || true
 
 # Copy the entrypoint that authenticates ngrok if a token is provided,
 # then hands off to code-server.
