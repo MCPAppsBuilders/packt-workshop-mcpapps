@@ -3,7 +3,7 @@ from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("basic-math-server", port=8046)
+mcp = FastMCP("basic-math-server", port=8301)
 
 RESOURCES_DIR = Path(__file__).parent / "resources"
 

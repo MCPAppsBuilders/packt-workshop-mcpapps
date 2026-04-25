@@ -49,6 +49,7 @@ services:
     ports:
       - "8443:8443"   # VSCode web (code-server)
       - "8000:8000"   # FastMCP Python server (HTTP transport)
+      - "8300-8399:8300-8399"   # Workshop services
       - "5173:5173"   # Vite dev server for the React view
       - "4040:4040"   # ngrok web inspector
     volumes:
