@@ -7,7 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 mcp = FastMCP(
     "basic-math-server",
-    port=9301,
+    port=8301,
     transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
 )
 

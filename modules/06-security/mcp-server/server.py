@@ -2,14 +2,33 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
+from mcp.server.auth.settings import AuthSettings
 from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from starlette.middleware.cors import CORSMiddleware
 
+from token_verifier import KeycloakTokenVerifier
+
+KEYCLOAK_URL = "http://localhost:8080"
+KEYCLOAK_REALM = "mcp"
+ISSUER_URL = f"{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}"
+SERVER_URL = "http://localhost:8306"
+
+token_verifier = KeycloakTokenVerifier(
+    issuer_url=ISSUER_URL,
+    expected_audience="mcp-fridge-server",
+)
+
 mcp = FastMCP(
     "fridge-server",
-    port=9304,
+    port=9306,
     transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
+    auth=AuthSettings(
+        issuer_url=ISSUER_URL,
+        resource_server_url=SERVER_URL,
+        required_scopes=[],
+    ),
+    token_verifier=token_verifier,
 )
 
 _original_streamable_http_app = mcp.streamable_http_app

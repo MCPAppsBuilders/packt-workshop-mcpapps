@@ -8,7 +8,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 mcp = FastMCP(
     "fridge-server",
-    port=9304,
+    port=8304,
     transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
 )
 

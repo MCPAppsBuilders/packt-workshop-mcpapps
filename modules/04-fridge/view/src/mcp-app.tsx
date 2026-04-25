@@ -33,6 +33,7 @@ function isExpiringSoon(expirationDate: string, days = 3): boolean {
 
 function FridgeApp() {
   const [items, setItems] = useState<FridgeItem[]>([]);
+  const [dragOver, setDragOver] = useState(false);
 
   const { app, error } = useApp({
     appInfo: { name: "Fridge View", version: "1.0.0" },
@@ -72,6 +73,32 @@ function FridgeApp() {
     });
   }, [app]);
 
+  const handleDrop = useCallback(
+    async (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(false);
+      const name = e.dataTransfer.getData("text/plain");
+      if (!name || !app) return;
+
+      // Call remove_item on the server
+      await app.callServerTool({ name: "remove_item", arguments: { name } });
+
+      // Update local state
+      const remaining = items.filter((i) => i.name !== name);
+      setItems(remaining);
+
+      // Update model context with remaining items
+      const summary = remaining.length === 0
+        ? "The fridge is now empty."
+        : `Fridge contents after removing "${name}":\n${remaining.map((i) => `- ${i.name} (${i.category}, expires ${i.expiration_date})`).join("\n")}`;
+
+      await app.updateModelContext({
+        content: [{ type: "text", text: summary }],
+      });
+    },
+    [app, items],
+  );
+
   if (error) return <div className="error">Error: {error.message}</div>;
   if (!app) return <div className="loading">Connecting...</div>;
 
@@ -95,6 +122,8 @@ function FridgeApp() {
               {shelf.map((item) => (
                 <span
                   key={item.name}
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData("text/plain", item.name)}
                   className={`item${isExpiringSoon(item.expiration_date) ? " expiring" : ""}`}
                   style={{ background: categoryColor(item.category) }}
                   title={`${item.name} — expires ${item.expiration_date}`}
@@ -106,6 +135,14 @@ function FridgeApp() {
             </div>
           ))
         )}
+      </div>
+      <div
+        className={`trash${dragOver ? " trash-active" : ""}`}
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={handleDrop}
+      >
+        🗑 Drop here to remove
       </div>
       {usedCategories.length > 0 && (
         <div className="legend">
