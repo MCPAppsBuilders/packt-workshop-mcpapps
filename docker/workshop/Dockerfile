@@ -48,9 +48,17 @@ RUN mkdir -p /etc/apt/keyrings \
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # -----------------------------------------------------------------------------
+# uv (fast Python package manager)
+# -----------------------------------------------------------------------------
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
+    && ln -sf /root/.local/bin/uv /usr/local/bin/uv \
+    && ln -sf /root/.local/bin/uvx /usr/local/bin/uvx \
+    && uv --version
+
+# -----------------------------------------------------------------------------
 # Python MCP stack (FastMCP + MCP CLI)
 # -----------------------------------------------------------------------------
-RUN pip install --no-cache-dir "mcp[cli]" fastmcp
+RUN pip install --no-cache-dir "mcp[cli]==1.27.0" fastmcp
 
 # -----------------------------------------------------------------------------
 # MCP test tooling (Inspector + MCP Jam)
