@@ -65,7 +65,7 @@ def get_config() -> str:
     return (RESOURCES_DIR / "config.json").read_text()
 
 
-@mcp.resource("ui://basic-add/basic_add.html", 
+@mcp.resource(uri="ui://basic-add/basic_add.html", 
               mime_type="text/html",
               meta={
                  "ui":{
