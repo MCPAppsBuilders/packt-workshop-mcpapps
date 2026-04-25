@@ -1,0 +1,6 @@
+{
+  "server_name": "mcp-basic-server",
+  "version": "0.1.0",
+  "description": "A basic MCP server for the Packt workshop",
+  "supported_operations": ["add", "subtract"]
+}
