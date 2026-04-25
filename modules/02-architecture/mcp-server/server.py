@@ -28,6 +28,7 @@ def _patched_streamable_http_app():
 mcp.streamable_http_app = _patched_streamable_http_app
 
 RESOURCES_DIR = Path(__file__).parent / "resources"
+ASSETS_DIR = Path(__file__).parent / "assets"
 
 
 # --- Tools ---
@@ -38,6 +39,10 @@ def add(a: float, b: float) -> float:
     """Add two numbers together."""
     return a + b
 
+@mcp.tool(meta ={"ui": {"resourceUri": "ui://basic-add/basic_add.html"}})
+def add_with_ui(a: float, b: float) -> float:
+    """Add two numbers together."""
+    return a + b
 
 @mcp.tool()
 def subtract(a: float, b: float) -> float:
@@ -58,6 +63,18 @@ def get_info() -> str:
 def get_config() -> str:
     """Return the server configuration as JSON."""
     return (RESOURCES_DIR / "config.json").read_text()
+
+
+@mcp.resource("ui://basic-add/basic_add.html", 
+              mime_type="text/html",
+              meta={
+                 "ui":{
+                   "prefersBorder": False
+                 }   
+              })
+def get_basic_add_widget() -> str:
+    """Return the basic_add interactive widget HTML."""
+    return (ASSETS_DIR / "basic_add.html").read_text()
 
 
 # --- Prompts ---
