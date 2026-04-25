@@ -51,8 +51,8 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 # uv (fast Python package manager)
 # -----------------------------------------------------------------------------
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
-    && ln -sf /root/.local/bin/uv /usr/local/bin/uv \
-    && ln -sf /root/.local/bin/uvx /usr/local/bin/uvx \
+    && cp /root/.local/bin/uv /usr/local/bin/uv \
+    && cp /root/.local/bin/uvx /usr/local/bin/uvx \
     && uv --version
 
 # -----------------------------------------------------------------------------
