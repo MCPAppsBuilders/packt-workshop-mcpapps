@@ -16,6 +16,12 @@ else
     echo "              from the VSCode terminal once you have signed up."
 fi
 
+# Clone the workshop repo on first boot.
+if [ ! -d /data/packt-workshop-mcpapps ]; then
+    echo "[entrypoint] cloning workshop repository into /data/packt-workshop-mcpapps"
+    git clone https://github.com/MCPAppsBuilders/packt-workshop-mcpapps.git /data/packt-workshop-mcpapps
+fi
+
 # Friendly welcome in /data the first time the container boots.
 if [ ! -f /data/README.md ]; then
     cat > /data/README.md <<'EOF'
