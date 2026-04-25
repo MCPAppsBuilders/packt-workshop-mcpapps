@@ -1,0 +1,8 @@
+{
+  "server": {
+    "name": "basic-math-server",
+    "url": "http://localhost:8301/mcp"
+  },
+  "model": "claude-sonnet-4-20250514",
+  "max_turns": 3
+}

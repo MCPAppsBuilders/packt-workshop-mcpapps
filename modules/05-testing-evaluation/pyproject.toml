@@ -1,0 +1,16 @@
+[project]
+name = "mcp-testing-evaluation"
+version = "0.1.0"
+description = "Testing & evaluation module for the Packt MCP workshop"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]>=1.27.0",
+    "pytest>=8.0",
+    "pytest-asyncio>=1.0",
+    "mcpevals",
+    "python-dotenv>=1.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

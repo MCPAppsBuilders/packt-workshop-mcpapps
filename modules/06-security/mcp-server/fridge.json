@@ -1,0 +1,62 @@
+[
+  {
+    "name": "carrot",
+    "expiration_date": "2026-05-16",
+    "category": "vegetable"
+  },
+  {
+    "name": "cream",
+    "expiration_date": "2026-04-26",
+    "category": "dairy"
+  },
+  {
+    "name": "lasagna sheets",
+    "expiration_date": "2026-05-20",
+    "category": "grain"
+  },
+  {
+    "name": "ground beef",
+    "expiration_date": "2026-04-28",
+    "category": "meat"
+  },
+  {
+    "name": "tomato sauce",
+    "expiration_date": "2026-05-03",
+    "category": "sauce"
+  },
+  {
+    "name": "ricotta cheese",
+    "expiration_date": "2026-05-01",
+    "category": "dairy"
+  },
+  {
+    "name": "mozzarella cheese",
+    "expiration_date": "2026-05-06",
+    "category": "dairy"
+  },
+  {
+    "name": "parmesan cheese",
+    "expiration_date": "2026-05-10",
+    "category": "dairy"
+  },
+  {
+    "name": "onion",
+    "expiration_date": "2026-05-15",
+    "category": "vegetable"
+  },
+  {
+    "name": "garlic",
+    "expiration_date": "2026-05-18",
+    "category": "vegetable"
+  },
+  {
+    "name": "olive oil",
+    "expiration_date": "2026-05-22",
+    "category": "oil"
+  },
+  {
+    "name": "couscous",
+    "expiration_date": "2026-05-12",
+    "category": "grain"
+  }
+]

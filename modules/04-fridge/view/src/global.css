@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: light-dark(#f0f4f8, #111);
+  color: light-dark(#333, #e0e0e0);
+}
+
+.fridge {
+  width: 320px;
+  background: light-dark(#e8ecf0, #1e2a38);
+  border: 3px solid light-dark(#b0bec5, #455a64);
+  border-radius: 16px;
+  padding: 12px;
+  position: relative;
+}
+
+.fridge-handle {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 60px;
+  background: light-dark(#90a4ae, #607d8b);
+  border-radius: 4px;
+}
+
+.fridge-header {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 0;
+  color: light-dark(#546e7a, #b0bec5);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.shelf {
+  border-bottom: 2px solid light-dark(#cfd8dc, #37474f);
+  padding: 10px 4px;
+  min-height: 52px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.shelf:last-child {
+  border-bottom: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.item.expiring {
+  outline: 2px dashed #ef4444;
+  outline-offset: 1px;
+}
+
+.item-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+  font-size: 0.7rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: light-dark(#78909c, #90a4ae);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 0;
+  color: light-dark(#999, #666);
+  font-style: italic;
+}
+
+.error {
+  color: #ef4444;
+  padding: 1rem;
+  text-align: center;
+}
+
+.loading {
+  padding: 1rem;
+  text-align: center;
+  color: light-dark(#999, #777);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.actions button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: light-dark(#546e7a, #455a64);
+  color: #fff;
+}
+
+.actions button:hover {
+  opacity: 0.85;
+}

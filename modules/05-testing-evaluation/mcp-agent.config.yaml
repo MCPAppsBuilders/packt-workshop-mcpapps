@@ -1,0 +1,11 @@
+provider: anthropic
+model: claude-sonnet-4-20250514
+
+mcp:
+  servers:
+    basic-math-server:
+      transport: streamable_http
+      url: http://127.0.0.1:9301/mcp
+
+default_servers:
+  - basic-math-server
