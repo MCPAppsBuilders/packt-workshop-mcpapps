@@ -54,6 +54,7 @@ services:
     volumes:
       # Single exportable volume. Everything the participant writes lives here.
       - ./data:/data
+      - ./home:/root
     depends_on:
       keycloak:
         condition: service_healthy
