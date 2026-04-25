@@ -2,9 +2,14 @@ import json
 from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 from starlette.middleware.cors import CORSMiddleware
 
-mcp = FastMCP("basic-math-server", port=8301)
+mcp = FastMCP(
+    "basic-math-server",
+    port=8301,
+    transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
+)
 
 # Patch CORS into the Starlette app (mcp 1.27.0 has no built-in CORS setting)
 _original_streamable_http_app = mcp.streamable_http_app
